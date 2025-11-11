@@ -1,11 +1,26 @@
 import React from 'react'
 
-const Formulario = () => {
+const Formulario = ({adicionarTarefa}) => {
+  let [nome, setNome] = React.useState("");
+  let [descricao, setDescricao] = React.useState("");
+
+  const lidarFormulario = (e) => {
+    e.preventDefault();
+    if(!nome || !descricao) return;
+
+    adicionarTarefa(nome, descricao)
+    setNome("")
+    setDescricao("")
+  }
+
   return (
     <div className='Formulario'>
-        <input type="text" placeholder='Nome da Tarefa' />
-        <input type="text" placeholder='Descricao da Tarefa'/>
-        <button>Confirmar</button>
+        <form onSubmit={lidarFormulario}>
+          <input value={nome} type="text" placeholder='Nome da Tarefa' onChange={(e)=>{setNome(e.target.value)}}/>
+          <input value={descricao} type="text" placeholder='Descricao da Tarefa'  onChange={(e)=>{setDescricao(e.target.value)}}/>
+          <button type='submit'>Criar Tarefa  </button>
+
+        </form>
     </div>
   )
 }
